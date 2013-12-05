@@ -41,7 +41,7 @@ import org.sonar.api.test.MutableTestCase;
 import org.sonar.api.test.MutableTestPlan;
 import org.sonar.api.test.MutableTestable;
 import org.sonar.plugins.jacococd.JaCoCoCDSensor;
-import org.sonar.plugins.jacococd.JacocoConfiguration;
+import org.sonar.plugins.jacococd.JacocoCDConfiguration;
 import org.sonar.test.TestUtils;
 
 import java.io.File;
@@ -67,7 +67,7 @@ public class JaCoCoSensorTest {
 
   private File jacocoExecutionData;
   private File outputDir;
-  private JacocoConfiguration configuration;
+  private JacocoCDConfiguration configuration;
   private ResourcePerspectives perspectives;
   private SensorContext context;
   private ModuleFileSystem fileSystem;
@@ -87,7 +87,7 @@ public class JaCoCoSensorTest {
     pathResolver = mock(PathResolver.class);
     project = mock(Project.class);
 
-    configuration = mock(JacocoConfiguration.class);
+    configuration = mock(JacocoCDConfiguration.class);
     perspectives = mock(ResourcePerspectives.class);
     sensor = new JaCoCoCDSensor(configuration, perspectives, fileSystem, pathResolver);
   }

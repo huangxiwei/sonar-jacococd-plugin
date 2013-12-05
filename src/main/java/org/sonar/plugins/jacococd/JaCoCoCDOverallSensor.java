@@ -49,12 +49,12 @@ public class JaCoCoCDOverallSensor implements Sensor {
 
   public static final String JACOCO_OVERALL = "jacoco-overall.exec";
 
-  private final JacocoConfiguration configuration;
+  private final JacocoCDConfiguration configuration;
   private final ResourcePerspectives perspectives;
   private final ModuleFileSystem fileSystem;
   private final PathResolver pathResolver;
 
-  public JaCoCoCDOverallSensor(JacocoConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
+  public JaCoCoCDOverallSensor(JacocoCDConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
     this.configuration = configuration;
     this.perspectives = perspectives;
     this.fileSystem = fileSystem;

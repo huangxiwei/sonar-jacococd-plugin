@@ -30,10 +30,10 @@ import org.sonar.api.resources.Project;
 @SupportedEnvironment("maven")
 public class JacocoMavenCDInitializer extends Initializer implements CoverageExtension, DependsUponMavenPlugin {
 
-  private JaCoCoMavenPluginHandler handler;
-  private JacocoConfiguration configuration;
+  private JaCoCoCDMavenPluginHandler handler;
+  private JacocoCDConfiguration configuration;
 
-  public JacocoMavenCDInitializer(JaCoCoMavenPluginHandler handler, JacocoConfiguration configuration) {
+  public JacocoMavenCDInitializer(JaCoCoCDMavenPluginHandler handler, JacocoCDConfiguration configuration) {
     this.handler = handler;
     this.configuration = configuration;
   }

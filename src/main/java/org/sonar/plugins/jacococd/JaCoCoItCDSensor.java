@@ -33,12 +33,12 @@ import org.sonar.api.scan.filesystem.PathResolver;
 import java.util.Collection;
 
 public class JaCoCoItCDSensor implements Sensor {
-  private final JacocoConfiguration configuration;
+  private final JacocoCDConfiguration configuration;
   private final ResourcePerspectives perspectives;
   private final ModuleFileSystem fileSystem;
   private final PathResolver pathResolver;
 
-  public JaCoCoItCDSensor(JacocoConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
+  public JaCoCoItCDSensor(JacocoCDConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
     this.configuration = configuration;
     this.perspectives = perspectives;
     this.fileSystem = fileSystem;

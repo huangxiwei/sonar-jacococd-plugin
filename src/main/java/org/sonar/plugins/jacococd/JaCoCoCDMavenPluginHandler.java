@@ -28,7 +28,7 @@ import org.sonar.api.utils.SonarException;
 
 import java.io.File;
 
-public class JaCoCoMavenPluginHandler implements MavenPluginHandler {
+public class JaCoCoCDMavenPluginHandler implements MavenPluginHandler {
 
   private static final String ARG_LINE_PARAMETER = "argLine";
   private static final String TEST_FAILURE_IGNORE_PARAMETER = "testFailureIgnore";
@@ -37,9 +37,9 @@ public class JaCoCoMavenPluginHandler implements MavenPluginHandler {
   private final String artifactId;
   private final String version;
 
-  private JacocoConfiguration configuration;
+  private JacocoCDConfiguration configuration;
 
-  public JaCoCoMavenPluginHandler(JacocoConfiguration configuration) {
+  public JaCoCoCDMavenPluginHandler(JacocoCDConfiguration configuration) {
     this.configuration = configuration;
     groupId = MavenSurefireUtils.GROUP_ID;
     artifactId = MavenSurefireUtils.ARTIFACT_ID;

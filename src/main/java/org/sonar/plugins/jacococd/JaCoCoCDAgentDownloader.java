@@ -28,14 +28,14 @@ import org.sonar.api.utils.SonarException;
 import java.io.File;
 import java.io.IOException;
 
-public class JaCoCoAgentDownloader implements BatchExtension {
+public class JaCoCoCDAgentDownloader implements BatchExtension {
 
   /**
    * Dirty hack, but it allows to extract agent only once during Sonar analyzes for multi-module project.
    */
   private static File agentJarFile;
 
-  public JaCoCoAgentDownloader() {
+  public JaCoCoCDAgentDownloader() {
   }
 
   public synchronized File getAgentJarFile() {

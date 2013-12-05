@@ -34,14 +34,14 @@ import org.sonar.plugins.java.api.JavaSettings;
 
 import java.util.List;
 
-public class JacocoConfiguration implements BatchExtension {
+public class JacocoCDConfiguration implements BatchExtension {
 
-  public static final String REPORT_PATH_PROPERTY = "sonar.jacoco.reportPath";
+  public static final String REPORT_PATH_PROPERTY = "sonar.jacococd.reportPath";
   public static final String REPORT_PATH_DEFAULT_VALUE = "target/jacoco.exec";
-  public static final String IT_REPORT_PATH_PROPERTY = "sonar.jacoco.itReportPath";
+  public static final String IT_REPORT_PATH_PROPERTY = "sonar.jacococd.itReportPath";
   public static final String IT_REPORT_PATH_DEFAULT_VALUE = "";
-  public static final String INCLUDES_PROPERTY = "sonar.jacoco.includes";
-  public static final String EXCLUDES_PROPERTY = "sonar.jacoco.excludes";
+  public static final String INCLUDES_PROPERTY = "sonar.jacococd.includes";
+  public static final String EXCLUDES_PROPERTY = "sonar.jacococd.excludes";
 
   /**
    * Hibernate uses Javassist to modify entity classes and without exclusion of such classes from JaCoCo exception might be thrown:
@@ -51,15 +51,15 @@ public class JacocoConfiguration implements BatchExtension {
    * </pre>
    */
   public static final String EXCLUDES_DEFAULT_VALUE = "*_javassist_*";
-  public static final String EXCLCLASSLOADER_PROPERTY = "sonar.jacoco.exclclassloader";
-  public static final String ANT_TARGETS_PROPERTY = "sonar.jacoco.antTargets";
+  public static final String EXCLCLASSLOADER_PROPERTY = "sonar.jacococd.exclclassloader";
+  public static final String ANT_TARGETS_PROPERTY = "sonar.jacococd.antTargets";
   public static final String ANT_TARGETS_DEFAULT_VALUE = "";
 
   private Settings settings;
   private JavaSettings javaSettings;
-  private JaCoCoAgentDownloader downloader;
+  private JaCoCoCDAgentDownloader downloader;
 
-  public JacocoConfiguration(Settings settings, JaCoCoAgentDownloader downloader, JavaSettings javaSettings) {
+  public JacocoCDConfiguration(Settings settings, JaCoCoCDAgentDownloader downloader, JavaSettings javaSettings) {
     this.settings = settings;
     this.downloader = downloader;
     this.javaSettings = javaSettings;
@@ -106,17 +106,17 @@ public class JacocoConfiguration implements BatchExtension {
   }
 
   public static List<PropertyDefinition> getPropertyDefinitions() {
-    String subCategory = "JaCoCo";
+    String subCategory = "JaCoCoCD";
     return ImmutableList.of(
-      PropertyDefinition.builder(JacocoConfiguration.REPORT_PATH_PROPERTY)
-        .defaultValue(JacocoConfiguration.REPORT_PATH_DEFAULT_VALUE)
+      PropertyDefinition.builder(JacocoCDConfiguration.REPORT_PATH_PROPERTY)
+        .defaultValue(JacocoCDConfiguration.REPORT_PATH_DEFAULT_VALUE)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
         .name("File with execution data")
         .description("Path (absolute or relative) to the file with execution data.")
         .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
-      PropertyDefinition.builder(JacocoConfiguration.INCLUDES_PROPERTY)
+      PropertyDefinition.builder(JacocoCDConfiguration.INCLUDES_PROPERTY)
         .multiValues(true)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
@@ -125,8 +125,8 @@ public class JacocoConfiguration implements BatchExtension {
           " Except for performance optimization or technical corner cases this option is normally not required.")
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
-      PropertyDefinition.builder(JacocoConfiguration.EXCLUDES_PROPERTY)
-        .defaultValue(JacocoConfiguration.EXCLUDES_DEFAULT_VALUE)
+      PropertyDefinition.builder(JacocoCDConfiguration.EXCLUDES_PROPERTY)
+        .defaultValue(JacocoCDConfiguration.EXCLUDES_DEFAULT_VALUE)
         .multiValues(true)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
@@ -135,7 +135,7 @@ public class JacocoConfiguration implements BatchExtension {
           " Except for performance optimization or technical corner cases this option is normally not required.")
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
-      PropertyDefinition.builder(JacocoConfiguration.EXCLCLASSLOADER_PROPERTY)
+      PropertyDefinition.builder(JacocoCDConfiguration.EXCLCLASSLOADER_PROPERTY)
         .multiValues(true)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
@@ -145,16 +145,16 @@ public class JacocoConfiguration implements BatchExtension {
           " instrumentation, in particular class loaders that do not have access to the Java runtime classes.")
         .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
-      PropertyDefinition.builder(JacocoConfiguration.IT_REPORT_PATH_PROPERTY)
-        .defaultValue(JacocoConfiguration.IT_REPORT_PATH_DEFAULT_VALUE)
+      PropertyDefinition.builder(JacocoCDConfiguration.IT_REPORT_PATH_PROPERTY)
+        .defaultValue(JacocoCDConfiguration.IT_REPORT_PATH_DEFAULT_VALUE)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
         .name("File with execution data for integration tests")
         .description("Path (absolute or relative) to the file with execution data.")
         .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
         .build(),
-      PropertyDefinition.builder(JacocoConfiguration.ANT_TARGETS_PROPERTY)
-        .defaultValue(JacocoConfiguration.ANT_TARGETS_DEFAULT_VALUE)
+      PropertyDefinition.builder(JacocoCDConfiguration.ANT_TARGETS_PROPERTY)
+        .defaultValue(JacocoCDConfiguration.ANT_TARGETS_DEFAULT_VALUE)
         .category(CoreProperties.CATEGORY_JAVA)
         .subCategory(subCategory)
         .name("Ant targets")

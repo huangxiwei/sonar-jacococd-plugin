@@ -26,8 +26,8 @@ import org.sonar.api.resources.InputFile;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
 import org.sonar.api.resources.ProjectFileSystem;
-import org.sonar.plugins.jacococd.JaCoCoMavenPluginHandler;
-import org.sonar.plugins.jacococd.JacocoConfiguration;
+import org.sonar.plugins.jacococd.JaCoCoCDMavenPluginHandler;
+import org.sonar.plugins.jacococd.JacocoCDConfiguration;
 import org.sonar.plugins.jacococd.JacocoMavenCDInitializer;
 
 import java.util.Collections;
@@ -37,14 +37,14 @@ import static org.mockito.Matchers.argThat;
 import static org.mockito.Mockito.*;
 
 public class JacocoMavenInitializerTest {
-  private JaCoCoMavenPluginHandler mavenPluginHandler;
+  private JaCoCoCDMavenPluginHandler mavenPluginHandler;
   private JacocoMavenCDInitializer initializer;
-  private JacocoConfiguration jacocoSettings;
+  private JacocoCDConfiguration jacocoSettings;
 
   @Before
   public void setUp() {
-    mavenPluginHandler = mock(JaCoCoMavenPluginHandler.class);
-    jacocoSettings = mock(JacocoConfiguration.class);
+    mavenPluginHandler = mock(JaCoCoCDMavenPluginHandler.class);
+    jacocoSettings = mock(JacocoCDConfiguration.class);
     when(jacocoSettings.isEnabled(any(Project.class))).thenReturn(true);
     initializer = new JacocoMavenCDInitializer(mavenPluginHandler, jacocoSettings);
   }
@@ -65,7 +65,7 @@ public class JacocoMavenInitializerTest {
     when(project.getAnalysisType()).thenReturn(Project.AnalysisType.DYNAMIC);
 
     assertThat(initializer.shouldExecuteOnProject(project)).isTrue();
-    assertThat(initializer.getMavenPluginHandler(project)).isInstanceOf(JaCoCoMavenPluginHandler.class);
+    assertThat(initializer.getMavenPluginHandler(project)).isInstanceOf(JaCoCoCDMavenPluginHandler.class);
   }
 
   @Test

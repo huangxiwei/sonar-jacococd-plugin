@@ -37,7 +37,7 @@ import org.sonar.api.scan.filesystem.ModuleFileSystem;
 import org.sonar.api.scan.filesystem.PathResolver;
 import org.sonar.api.test.IsMeasure;
 import org.sonar.plugins.jacococd.JaCoCoItCDSensor;
-import org.sonar.plugins.jacococd.JacocoConfiguration;
+import org.sonar.plugins.jacococd.JacocoCDConfiguration;
 import org.sonar.test.TestUtils;
 
 import java.io.File;
@@ -57,7 +57,7 @@ public class JaCoCoItSensorTest {
   private static File outputDir;
   private static File jacocoExecutionData;
 
-  private JacocoConfiguration configuration;
+  private JacocoCDConfiguration configuration;
   private ResourcePerspectives perspectives;
   private ModuleFileSystem fileSystem;
   private PathResolver pathResolver;
@@ -73,7 +73,7 @@ public class JaCoCoItSensorTest {
 
   @Before
   public void setUp() {
-    configuration = mock(JacocoConfiguration.class);
+    configuration = mock(JacocoCDConfiguration.class);
     perspectives = mock(ResourcePerspectives.class);
     fileSystem = mock(ModuleFileSystem.class);
     pathResolver = mock(PathResolver.class);

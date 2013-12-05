@@ -27,9 +27,9 @@ import org.sonar.api.config.PropertyDefinitions;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.Project;
 import org.sonar.api.test.MavenTestUtils;
-import org.sonar.plugins.jacococd.JaCoCoAgentDownloader;
-import org.sonar.plugins.jacococd.JaCoCoMavenPluginHandler;
-import org.sonar.plugins.jacococd.JacocoConfiguration;
+import org.sonar.plugins.jacococd.JaCoCoCDAgentDownloader;
+import org.sonar.plugins.jacococd.JaCoCoCDMavenPluginHandler;
+import org.sonar.plugins.jacococd.JacocoCDConfiguration;
 import org.sonar.plugins.java.api.JavaSettings;
 
 import java.io.File;
@@ -43,17 +43,17 @@ import static org.mockito.Mockito.*;
  */
 public class JaCoCoMavenPluginHandlerTest {
 
-  private JacocoConfiguration configuration;
-  private JaCoCoMavenPluginHandler handler;
+  private JacocoCDConfiguration configuration;
+  private JaCoCoCDMavenPluginHandler handler;
 
   @Before
   public void setUp() throws Exception {
-    JaCoCoAgentDownloader downloader = mock(JaCoCoAgentDownloader.class);
+    JaCoCoCDAgentDownloader downloader = mock(JaCoCoCDAgentDownloader.class);
     when(downloader.getAgentJarFile()).thenReturn(new File("jacocoagent.jar"));
-    Settings settings = new Settings(new PropertyDefinitions().addComponents(JacocoConfiguration.getPropertyDefinitions()));
-    configuration = spy(new JacocoConfiguration(settings, downloader, new JavaSettings(settings)));
+    Settings settings = new Settings(new PropertyDefinitions().addComponents(JacocoCDConfiguration.getPropertyDefinitions()));
+    configuration = spy(new JacocoCDConfiguration(settings, downloader, new JavaSettings(settings)));
 
-    handler = new JaCoCoMavenPluginHandler(configuration);
+    handler = new JaCoCoCDMavenPluginHandler(configuration);
   }
 
   @Test

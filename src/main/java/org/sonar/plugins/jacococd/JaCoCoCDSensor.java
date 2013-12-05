@@ -33,12 +33,12 @@ import java.util.Collection;
 
 public class JaCoCoCDSensor implements Sensor {
 
-  private JacocoConfiguration configuration;
+  private JacocoCDConfiguration configuration;
   private final ResourcePerspectives perspectives;
   private final ModuleFileSystem fileSystem;
   private final PathResolver pathResolver;
 
-  public JaCoCoCDSensor(JacocoConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
+  public JaCoCoCDSensor(JacocoCDConfiguration configuration, ResourcePerspectives perspectives, ModuleFileSystem fileSystem, PathResolver pathResolver) {
     this.configuration = configuration;
     this.perspectives = perspectives;
     this.fileSystem = fileSystem;

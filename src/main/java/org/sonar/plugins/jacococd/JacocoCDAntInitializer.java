@@ -28,14 +28,14 @@ import org.sonar.api.resources.Project;
 import java.util.Map;
 
 @SupportedEnvironment("ant")
-public class JacocoAntInitializer extends Initializer implements CoverageExtension {
+public class JacocoCDAntInitializer extends Initializer implements CoverageExtension {
 
   private final TaskEnhancer[] taskEnhancers = new TaskEnhancer[] { new JavaLikeTaskEnhancer("java"), new JavaLikeTaskEnhancer("junit"), new TestngTaskEnhancer() };
 
   private org.apache.tools.ant.Project antProject;
-  private JacocoConfiguration configuration;
+  private JacocoCDConfiguration configuration;
 
-  public JacocoAntInitializer(org.apache.tools.ant.Project antProject, JacocoConfiguration configuration) {
+  public JacocoCDAntInitializer(org.apache.tools.ant.Project antProject, JacocoCDConfiguration configuration) {
     this.antProject = antProject;
     this.configuration = configuration;
   }

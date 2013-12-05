@@ -28,15 +28,15 @@ public class JaCoCoCDPlugin extends SonarPlugin {
 
   public List<?> getExtensions() {
     ImmutableList.Builder<Object> extensions = ImmutableList.builder();
-    extensions.addAll(JacocoConfiguration.getPropertyDefinitions());
+    extensions.addAll(JacocoCDConfiguration.getPropertyDefinitions());
     extensions.add(
-      JacocoConfiguration.class,
-      JaCoCoAgentDownloader.class,
+      JacocoCDConfiguration.class,
+      JaCoCoCDAgentDownloader.class,
       // Ant
-      JacocoAntInitializer.class,
+      JacocoCDAntInitializer.class,
       // Maven
       JacocoMavenCDInitializer.class,
-      JaCoCoMavenPluginHandler.class,
+      JaCoCoCDMavenPluginHandler.class,
       // Unit tests
       JaCoCoCDSensor.class,
       // Integration tests
