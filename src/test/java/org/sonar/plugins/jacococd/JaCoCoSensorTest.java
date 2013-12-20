@@ -94,7 +94,7 @@ public class JaCoCoSensorTest {
 
   @Test
   public void testSensorDefinition() {
-    assertThat(sensor.toString(), is("JaCoCoSensor"));
+    assertThat(sensor.toString(), is("JaCoCoCDSensor"));
   }
 
   @Test

@@ -82,7 +82,7 @@ public class JaCoCoItSensorTest {
 
   @Test
   public void testSensorDefinition() {
-    assertThat(sensor.toString()).isEqualTo("JaCoCoItSensor");
+    assertThat(sensor.toString()).isEqualTo("JaCoCoItCDSensor");
   }
 
   @Test
