@@ -86,5 +86,7 @@ public class JaCoCoCDMavenPluginHandler implements MavenPluginHandler {
 
     plugin.setParameter(TEST_FAILURE_IGNORE_PARAMETER, "true");
   }
+  
+  
 
 }

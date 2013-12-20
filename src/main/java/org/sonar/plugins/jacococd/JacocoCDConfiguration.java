@@ -19,23 +19,91 @@
  */
 package org.sonar.plugins.jacococd;
 
-import com.google.common.base.Joiner;
-import com.google.common.collect.ImmutableList;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.commons.lang.StringUtils;
 import org.jacoco.core.runtime.AgentOptions;
 import org.sonar.api.BatchExtension;
 import org.sonar.api.CoreProperties;
+import org.sonar.api.Properties;
+import org.sonar.api.Property;
 import org.sonar.api.config.PropertyDefinition;
 import org.sonar.api.config.Settings;
 import org.sonar.api.resources.Java;
 import org.sonar.api.resources.Project;
-import org.sonar.api.resources.Qualifiers;
 import org.sonar.plugins.java.api.JavaSettings;
 
-import java.util.List;
+import com.google.common.base.Joiner;
+@Properties({
+	@Property(
+			key=JacocoCDConfiguration.REPORT_PATH_PROPERTY,
+			defaultValue=JacocoCDConfiguration.REPORT_PATH_DEFAULT_VALUE,
+			category=JacocoCDConfiguration.JACOCOCD_CATEGORY,
+			name = "File with execution data",
+	        description = "Path (absolute or relative) to the file with execution data.",
+	        project = true, 
+	        module = true
+			),
+	@Property(
+			key=JacocoCDConfiguration.IT_REPORT_PATH_PROPERTY,
+			defaultValue=JacocoCDConfiguration.IT_REPORT_PATH_DEFAULT_VALUE,
+			category=JacocoCDConfiguration.JACOCOCD_CATEGORY,
+			name = "File with execution data for integration tests",
+		    description = "Path (absolute or relative) to the file with execution data.",
+	        project = true, 
+	        module = true
+			),		
+	@Property(
+			key=JacocoCDConfiguration.INCLUDES_PROPERTY,
+			multiValues = true,
+			category=JacocoCDConfiguration.JACOCOCD_CATEGORY,
+			name = "Includes",
+		    description = "A list of class names that should be included in execution analysis (see wildcards)." 
+		    	+ " Except for performance optimization or technical corner cases this option is normally not required.",
+		        project = true, 
+		        module = true
+			),	
+	@Property(
+			key=JacocoCDConfiguration.EXCLUDES_PROPERTY,
+			
+			multiValues = true,
+			defaultValue=JacocoCDConfiguration.EXCLUDES_DEFAULT_VALUE,
+			category=JacocoCDConfiguration.JACOCOCD_CATEGORY,
+			name = "Excludes",
+		    description = "A list of class names that should be excluded in execution analysis (see wildcards)." 
+		    	+ " Except for performance optimization or technical corner cases this option is normally not required.",
+		        project = true, 
+		        module = true
+			),				
+	@Property(
+			key=JacocoCDConfiguration.EXCLCLASSLOADER_PROPERTY,
+			
+			multiValues = true,
+			category=JacocoCDConfiguration.JACOCOCD_CATEGORY,
+			name = "Excluded class loaders",
+		    description = "A list of class loader names that should be excluded from execution analysis (see wildcards)." +
+			          " This option might be required in case of special frameworks that conflict with JaCoCo code" +
+			          " instrumentation, in particular class loaders that do not have access to the Java runtime classes.",
+				        project = true, 
+				        module = true
+			),				
 
+	@Property(
+			key=JacocoCDConfiguration.ANT_TARGETS_PROPERTY,
+			
+			multiValues = true,
+			defaultValue=JacocoCDConfiguration.ANT_TARGETS_DEFAULT_VALUE,
+			category=CoreProperties.CATEGORY_JAVA,
+			name = "Ant targets",
+		    description ="Comma separated list of Ant targets for execution of tests.",
+	        project = true, 
+	        module = true
+			)		
+}
+)
 public class JacocoCDConfiguration implements BatchExtension {
-
+  public static final String JACOCOCD_CATEGORY="JaCoCoCD";
   public static final String REPORT_PATH_PROPERTY = "sonar.jacococd.reportPath";
   public static final String REPORT_PATH_DEFAULT_VALUE = "target/jacoco.exec";
   public static final String IT_REPORT_PATH_PROPERTY = "sonar.jacococd.itReportPath";
@@ -106,62 +174,12 @@ public class JacocoCDConfiguration implements BatchExtension {
   }
 
   public static List<PropertyDefinition> getPropertyDefinitions() {
-    String subCategory = "JaCoCoCD";
-    return ImmutableList.of(
-      PropertyDefinition.builder(JacocoCDConfiguration.REPORT_PATH_PROPERTY)
-        .defaultValue(JacocoCDConfiguration.REPORT_PATH_DEFAULT_VALUE)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("File with execution data")
-        .description("Path (absolute or relative) to the file with execution data.")
-        .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build(),
-      PropertyDefinition.builder(JacocoCDConfiguration.INCLUDES_PROPERTY)
-        .multiValues(true)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("Includes")
-        .description("A list of class names that should be included in execution analysis (see wildcards)." +
-          " Except for performance optimization or technical corner cases this option is normally not required.")
-        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build(),
-      PropertyDefinition.builder(JacocoCDConfiguration.EXCLUDES_PROPERTY)
-        .defaultValue(JacocoCDConfiguration.EXCLUDES_DEFAULT_VALUE)
-        .multiValues(true)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("Excludes")
-        .description("A list of class names that should be excluded from execution analysis (see wildcards)." +
-          " Except for performance optimization or technical corner cases this option is normally not required.")
-        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build(),
-      PropertyDefinition.builder(JacocoCDConfiguration.EXCLCLASSLOADER_PROPERTY)
-        .multiValues(true)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("Excluded class loaders")
-        .description("A list of class loader names that should be excluded from execution analysis (see wildcards)." +
-          " This option might be required in case of special frameworks that conflict with JaCoCo code" +
-          " instrumentation, in particular class loaders that do not have access to the Java runtime classes.")
-        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build(),
-      PropertyDefinition.builder(JacocoCDConfiguration.IT_REPORT_PATH_PROPERTY)
-        .defaultValue(JacocoCDConfiguration.IT_REPORT_PATH_DEFAULT_VALUE)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("File with execution data for integration tests")
-        .description("Path (absolute or relative) to the file with execution data.")
-        .onlyOnQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build(),
-      PropertyDefinition.builder(JacocoCDConfiguration.ANT_TARGETS_PROPERTY)
-        .defaultValue(JacocoCDConfiguration.ANT_TARGETS_DEFAULT_VALUE)
-        .category(CoreProperties.CATEGORY_JAVA)
-        .subCategory(subCategory)
-        .name("Ant targets")
-        .description("Comma separated list of Ant targets for execution of tests.")
-        .onQualifiers(Qualifiers.PROJECT, Qualifiers.MODULE)
-        .build()
-    );
+
+    List<PropertyDefinition> list = new ArrayList<PropertyDefinition>();
+    
+    
+    return list;
+      
   }
 
 }
